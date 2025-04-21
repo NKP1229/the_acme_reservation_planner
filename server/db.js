@@ -62,7 +62,17 @@ const fetchCustomers = async (id) => {
     console.error(error);
   }
 };
-const fetchRestaurants = async () => {};
+const fetchRestaurants = async (id) => {
+  try {
+    const SQL = `
+        SELECT * from restaurant WHERE id = $1
+    `;
+    const response = await client.query(SQL, [id]);
+    return response.rows;
+  } catch (error) {
+    console.error(error);
+  }
+};
 const createReservation = async () => {};
 const destroyReservation = async () => {};
 
