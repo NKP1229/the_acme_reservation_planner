@@ -2,7 +2,6 @@ const { client } = require("./common");
 
 const createTables = async () => {
   try {
-    await client.connect();
     const SQL = `
             DROP TABLE IF EXISTS Customer CASCADE;
             CREATE TABLE Customer(
@@ -30,7 +29,17 @@ const createTables = async () => {
     console.error(error);
   }
 };
-const createCustomer = async () => {};
+const createCustomer = async (name) => {
+  try {
+    const SQL = `
+        INSERT INTO customer(name) VALUES($1) RETURNING *
+    `;
+    response = await client.query(SQL, [name]);
+    return response.rows;
+  } catch (error) {
+    console.error(error);
+  }
+};
 const createRestaurant = async () => {};
 const fetchCustomers = async () => {};
 const fetchRestaurants = async () => {};
