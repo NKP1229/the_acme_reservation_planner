@@ -40,7 +40,17 @@ const createCustomer = async (name) => {
     console.error(error);
   }
 };
-const createRestaurant = async () => {};
+const createRestaurant = async (name) => {
+  try {
+    const SQL = `
+            INSERT INTO restaurant(name) VALUES($1) RETURNING *
+        `;
+    response = await client.query(SQL, [name]);
+    return response.rows;
+  } catch (error) {
+    console.error(error);
+  }
+};
 const fetchCustomers = async () => {};
 const fetchRestaurants = async () => {};
 const createReservation = async () => {};
