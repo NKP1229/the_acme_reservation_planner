@@ -43,15 +43,25 @@ const createCustomer = async (name) => {
 const createRestaurant = async (name) => {
   try {
     const SQL = `
-            INSERT INTO restaurant(name) VALUES($1) RETURNING *
-        `;
+        INSERT INTO restaurant(name) VALUES($1) RETURNING *
+    `;
     response = await client.query(SQL, [name]);
     return response.rows;
   } catch (error) {
     console.error(error);
   }
 };
-const fetchCustomers = async () => {};
+const fetchCustomers = async (id) => {
+  try {
+    const SQL = `
+        SELECT * from customer WHERE id = $1
+    `;
+    const response = await client.query(SQL, [id]);
+    return response.rows;
+  } catch (error) {
+    console.error(error);
+  }
+};
 const fetchRestaurants = async () => {};
 const createReservation = async () => {};
 const destroyReservation = async () => {};
