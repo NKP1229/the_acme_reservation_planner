@@ -51,23 +51,23 @@ const createRestaurant = async (name) => {
     console.error(error);
   }
 };
-const fetchCustomers = async (id) => {
+const fetchCustomers = async () => {
   try {
     const SQL = `
-        SELECT * from customer WHERE id = $1
+        SELECT * from customer 
     `;
-    const response = await client.query(SQL, [id]);
+    const response = await client.query(SQL);
     return response.rows;
   } catch (error) {
     console.error(error);
   }
 };
-const fetchRestaurants = async (id) => {
+const fetchRestaurants = async () => {
   try {
     const SQL = `
-        SELECT * from restaurant WHERE id = $1
+        SELECT * from restaurant
     `;
-    const response = await client.query(SQL, [id]);
+    const response = await client.query(SQL);
     return response.rows;
   } catch (error) {
     console.error(error);
@@ -94,12 +94,14 @@ const createReservation = async (
     console.error(error);
   }
 };
-const destroyReservation = async (id) => {
+const destroyReservation = async (id, customer_id) => {
   try {
     const SQL = `
-        DELETE FROM reservation WHERE id = $1
+        DELETE FROM reservation 
+        WHERE id = $1 
+        AND WHERE customer_id = (SELECT id from customer where type = $2)
     `;
-    const response = await client.query(SQL, [id]);
+    const response = await client.query(SQL, [id, customer_id]);
     return response.rows;
   } catch (error) {
     console.error(error);
