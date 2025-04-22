@@ -12,6 +12,7 @@ const {
   createRestaurant,
   fetchCustomers,
   fetchRestaurants,
+  fetchReservations,
   createReservation,
   destroyReservation,
 } = require("./db");
@@ -72,19 +73,17 @@ app.get("/api/restaurants", async (req, res, next) => {
 });
 app.get("/api/reservations", async (req, res, next) => {
   try {
-    const SQL = `
-        SELECT * from reservation
-    `;
-    const response = await client.query(SQL);
-    res.status(200).json(response.rows);
+    const response = await fetchReservations();
+    res.status(200).json(response);
   } catch (error) {
     next(error);
   }
 });
-app.post("/api/customers/:id/reservations", async (req, res, next) => {
+app.post("/api/customers/:customer_id/reservations", async (req, res, next) => {
   try {
     const { date, party_count, restaurant_id } = req.body;
     const { customer_id } = req.params;
+    console.log(date, party_count, restaurant_id, customer_id);
     const response = await createReservation(
       date,
       party_count,

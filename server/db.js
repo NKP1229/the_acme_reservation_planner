@@ -72,6 +72,17 @@ const fetchRestaurants = async () => {
     console.error(error);
   }
 };
+const fetchReservations = async () => {
+  try {
+    const SQL = `
+        SELECT * from reservation
+    `;
+    const response = await client.query(SQL);
+    return response.rows;
+  } catch (error) {
+    console.error(error);
+  }
+};
 const createReservation = async (
   date,
   party_count,
@@ -88,6 +99,7 @@ const createReservation = async (
       restaurant_id,
       customer_id,
     ]);
+    console.log("Reservation Insert Response:", response);
     return response.rows;
   } catch (error) {
     console.error(error);
@@ -113,6 +125,7 @@ module.exports = {
   createRestaurant,
   fetchCustomers,
   fetchRestaurants,
+  fetchReservations,
   createReservation,
   destroyReservation,
 };

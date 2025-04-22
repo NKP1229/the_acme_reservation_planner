@@ -104,11 +104,15 @@ function App() {
   async function addNewReservation(event) {
     event.preventDefault();
     try {
-      await axios.post(`/api/customers/${whichCustomer}/reservations`, {
-        date: Date,
-        party_count: partyCount,
-        restaurant_id: whichRestaurant,
-      });
+      const response = await axios.post(
+        `/api/customers/${whichCustomer}/reservations`,
+        {
+          date: Date,
+          party_count: partyCount,
+          restaurant_id: whichRestaurant,
+        }
+      );
+      console.log(response);
       setAddReservation(false);
     } catch (error) {
       console.error(error);
@@ -289,7 +293,11 @@ function App() {
           <ol>
             {reservations.map((reservation) => (
               <li key={reservation.id}>
-                <div>{reservation.name}</div>
+                <h4>
+                  Customer: {reservation.customer_id}, Restaurant:{" "}
+                  {reservation.restaurant_id}, Date: {reservation.date}, Party
+                  Count: {reservation.party_count}
+                </h4>
               </li>
             ))}
           </ol>
