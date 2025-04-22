@@ -4,6 +4,19 @@
   padding: 2rem;
   text-align: center;
 }
+body {
+  background-image: url("https://images.pexels.com/photos/941861/pexels-photo-941861.jpeg?cs=srgb&dl=pexels-chanwalrus-941861.jpg&fm=jpg");
+  background-size: cover; /* Ensures the image covers the screen */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Ensures the image doesn't repeat */
+  height: 100vh; /* Makes the body take the full height of the viewport */
+  margin: 0;
+  text-shadow: 1px 1px 1px black;
+}
+.page {
+  background-color: rgba(255, 255, 255, 0.35);
+  border-radius: 8px;
+}
 ul li {
   display: inline-block;
   margin: 5px;
