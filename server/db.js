@@ -94,8 +94,13 @@ const createReservation = async (
     console.error(error);
   }
 };
-const destroyReservation = async () => {
+const destroyReservation = async (id) => {
   try {
+    const SQL = `
+        DELETE FROM reservation WHERE id = $1
+    `;
+    const response = await client.query(SQL, [id]);
+    return response.rows;
   } catch (error) {
     console.error(error);
   }
