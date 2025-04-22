@@ -45,7 +45,7 @@ function App() {
     event.preventDefault();
     try {
       console.log("new customer: ", customerName);
-      const response = await axios.post("/api/newCustomer", {
+      await axios.post("/api/newCustomer", {
         name: customerName,
       });
       setAddCustomer(false);
@@ -58,7 +58,7 @@ function App() {
     event.preventDefault();
     try {
       console.log("new customer: ", restaurantName);
-      const response = await axios.post("/api/newRestaurant", {
+      await axios.post("/api/newRestaurant", {
         name: restaurantName,
       });
       setAddRestaurant(false);
@@ -144,6 +144,7 @@ function App() {
           </ol>
           <button onClick={() => setAddRestaurant(true)}>add Restaurant</button>
         </main>
+        <button onClick={() => resetTables()}>RESET TABLES</button>
       </div>
     );
   }
@@ -170,6 +171,7 @@ function App() {
         </ol>
         <button onClick={() => setAddCustomer(true)}>add Customer</button>
       </main>
+      <button onClick={() => resetTables()}>RESET TABLES</button>
     </div>
   );
 }

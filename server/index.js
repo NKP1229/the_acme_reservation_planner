@@ -4,7 +4,7 @@ const app = express();
 const PORT = 3000;
 app.use(require("morgan")("dev"));
 const cors = require("cors");
-app.use(cors({ origin: "http://localhost:3000" }));
+app.use(cors({ origin: `http://localhost:${PORT}` }));
 app.use(express.json());
 const {
   createTables,
@@ -24,12 +24,16 @@ app.get("/", (req, res) => {
   res.status(200).json({ message: "This works" });
 });
 
-app.get("/resetTables", async (req, res, next) => {
+app.put("/resetTables", async (req, res, next) => {
   try {
-    const response = await createTables();
-    res.status(200).json(response);
+    await createTables();
+    res.status(200).json({ message: "Tables have been reset successfully." });
   } catch (error) {
     next(error);
+    console.error("Error resetting tables:", error); // Log the error on the server side
+    res
+      .status(500)
+      .json({ message: "Failed to reset tables", error: error.message });
   }
 });
 app.post("/api/newCustomer", async (req, res, next) => {

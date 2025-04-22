@@ -8,3 +8,6 @@ ul li {
   display: inline-block;
   margin: 5px;
 }
+ol {
+  list-style-type: none;
+}

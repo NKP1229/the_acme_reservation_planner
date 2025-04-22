@@ -4,17 +4,17 @@ const createTables = async () => {
   try {
     const SQL = `
             DROP TABLE IF EXISTS Customer CASCADE;
-            CREATE TABLE Customer(
+            CREATE TABLE customer(
                 id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                 name VARCHAR(100)
             );
             DROP TABLE IF EXISTS Restaurant CASCADE;
-            CREATE TABLE Restaurant(
+            CREATE TABLE restaurant(
                 id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                 name VARCHAR(100)
             );
             DROP TABLE IF EXISTS Reservation CASCADE;
-            CREATE TABLE Reservation(
+            CREATE TABLE reservation(
                 id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                 date DATE NOT NULL,
                 party_count INTEGER NOT NULL,
