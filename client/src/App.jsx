@@ -7,9 +7,12 @@ function App() {
   const [restaurants, setRestaurants] = useState([]);
   const [customers, setCustomers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [addCustomer, setAddCustomer] = useState(false);
+  const [addRestaurant, setAddRestaurant] = useState(false);
 
   useEffect(() => {
     const getAllRestaurants = async () => {
+      setIsLoading(true);
       try {
         const response = await axios.get("/api/restaurants");
         setRestaurants(response.data);
@@ -22,6 +25,7 @@ function App() {
     };
     getAllRestaurants();
     const getAllCustomers = async () => {
+      setIsLoading(true);
       try {
         const response = await axios.get("/api/customers");
         setCustomers(response.data);
@@ -33,10 +37,30 @@ function App() {
       }
     };
     getAllCustomers();
-  }, [showRestaurant]);
+  }, [showRestaurant, addRestaurant]);
 
   if (isLoading) {
     return <section className="loading">Loading</section>;
+  }
+  if (addCustomer) {
+    return (
+      <div className="page">
+        <main>
+          <button onClick={() => setAddCustomer(false)}>back</button>
+          <h1>Add new Customer:</h1>
+        </main>
+      </div>
+    );
+  }
+  if (addRestaurant) {
+    return (
+      <div className="page">
+        <main>
+          <button onClick={() => setAddRestaurant(false)}>back</button>
+          <h1>Add new Restaurant:</h1>
+        </main>
+      </div>
+    );
   }
   if (showRestaurant) {
     return (
@@ -64,6 +88,7 @@ function App() {
               </li>
             ))}
           </ol>
+          <button onClick={() => setAddRestaurant(true)}>add Restaurant</button>
         </main>
       </div>
     );
@@ -89,6 +114,7 @@ function App() {
             </li>
           ))}
         </ol>
+        <button onClick={() => setAddCustomer(true)}>add Customer</button>
       </main>
     </div>
   );
