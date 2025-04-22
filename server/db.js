@@ -110,10 +110,9 @@ const destroyReservation = async (id, customer_id) => {
     const SQL = `
         DELETE FROM reservation 
         WHERE id = $1 
-        AND customer_id = (SELECT id FROM customer WHERE name = $2)
+        AND customer_id = (SELECT id FROM customer WHERE id = $2)
     `;
     const response = await client.query(SQL, [id, customer_id]);
-    return response.rows;
   } catch (error) {
     console.error(error);
   }

@@ -19,6 +19,7 @@ function App() {
   const [whichCustomer, setWhichCustomer] = useState("");
   const [partyCount, setPartyCount] = useState(1);
   const [Date, setDate] = useState("");
+  const [deleteReservation, setDeleteReservation] = useState(false);
 
   useEffect(() => {
     const getAllRestaurants = async () => {
@@ -60,7 +61,7 @@ function App() {
       }
     };
     getAllReservations();
-  }, [showCustomer, showRestaurant, addRestaurant]);
+  }, [addRestaurant, addReservation, deleteReservation]);
 
   function whichNav(id) {
     if (id == "customer") {
@@ -117,6 +118,16 @@ function App() {
     } catch (error) {
       console.error(error);
       setAddReservation(false);
+    }
+  }
+  async function deleteAReservation(customer_id, id) {
+    setDeleteReservation(true);
+    try {
+      await axios.delete(`/api/customers/${customer_id}/reservations/${id}`);
+      setDeleteReservation(false);
+    } catch (error) {
+      console.error(error);
+      setDeleteReservation(false);
     }
   }
   if (isLoading) {
@@ -298,6 +309,13 @@ function App() {
                   {reservation.restaurant_id}, Date: {reservation.date}, Party
                   Count: {reservation.party_count}
                 </h4>
+                <button
+                  onClick={() =>
+                    deleteAReservation(reservation.customer_id, reservation.id)
+                  }
+                >
+                  Cancel
+                </button>
               </li>
             ))}
           </ol>

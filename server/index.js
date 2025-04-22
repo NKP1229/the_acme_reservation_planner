@@ -90,7 +90,7 @@ app.post("/api/customers/:customer_id/reservations", async (req, res, next) => {
       restaurant_id,
       customer_id
     );
-    res.status(200).json(response);
+    res.status(201).json(response);
   } catch (error) {
     next(error);
   }
@@ -101,7 +101,7 @@ app.delete(
     try {
       const { id, customer_id } = req.params;
       await destroyReservation(id, customer_id);
-      res.status(204);
+      res.status(204).send();
     } catch (error) {
       next(error);
     }
