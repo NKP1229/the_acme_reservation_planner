@@ -15,6 +15,10 @@ function App() {
   const [addRestaurant, setAddRestaurant] = useState(false);
   const [restaurantName, setRestaurantName] = useState("");
   const [addReservation, setAddReservation] = useState(false);
+  const [whichRestaurant, setWhichRestaurant] = useState("");
+  const [whichCustomer, setWhichCustomer] = useState("");
+  const [partyCount, setPartyCount] = useState(1);
+  const [Date, setDate] = useState("");
 
   useEffect(() => {
     const getAllRestaurants = async () => {
@@ -55,8 +59,8 @@ function App() {
         setIsLoading(false);
       }
     };
-    getAllCustomers();
-  }, [showRestaurant, addRestaurant]);
+    getAllReservations();
+  }, [showCustomer, showRestaurant, addRestaurant]);
 
   function whichNav(id) {
     if (id == "customer") {
@@ -100,7 +104,12 @@ function App() {
   async function addNewReservation(event) {
     event.preventDefault();
     try {
-      console.log;
+      await axios.post(`/api/customers/${whichCustomer}/reservations`, {
+        date: Date,
+        party_count: partyCount,
+        restaurant_id: whichRestaurant,
+      });
+      setAddReservation(false);
     } catch (error) {
       console.error(error);
       setAddReservation(false);
@@ -161,6 +170,60 @@ function App() {
         <main>
           <button onClick={() => setAddReservation(false)}>back</button>
           <h1>Add new reservation:</h1>
+          <form onSubmit={addNewReservation}>
+            <div>
+              <label>Date</label>
+              <input
+                type="date"
+                name="Date"
+                value={Date}
+                onChange={(e) => setDate(e.target.value)}
+              />
+            </div>
+            <div>
+              <label>Party Count</label>
+              <select
+                value={partyCount}
+                onChange={(e) => setPartyCount(e.target.value)}
+              >
+                <option></option>
+                <option value="2">2</option>
+                <option value="4">4</option>
+                <option value="6">6</option>
+                <option value="8">8</option>
+                <option value="10">10</option>
+              </select>
+            </div>
+            <div>
+              <label>Restaurant</label>
+              <select
+                value={whichRestaurant}
+                onChange={(e) => setWhichRestaurant(e.target.value)}
+              >
+                <option></option>
+                {restaurants.map((restaurant) => (
+                  <option key={restaurant.id} value={restaurant.id}>
+                    {restaurant.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label>Customer</label>
+              <select
+                value={whichCustomer}
+                onChange={(e) => setWhichCustomer(e.target.value)}
+              >
+                <option></option>
+                {customers.map((customer) => (
+                  <option key={customer.id} value={customer.id}>
+                    {customer.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <button type="submit">Submit</button>
+          </form>
         </main>
       </div>
     );

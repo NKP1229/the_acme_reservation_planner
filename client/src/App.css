@@ -16,6 +16,10 @@ body {
 .page {
   background-color: rgba(255, 255, 255, 0.35);
   border-radius: 8px;
+  padding: 7.5px;
+}
+main {
+  padding: 25px;
 }
 ul li {
   display: inline-block;
@@ -23,4 +27,11 @@ ul li {
 }
 ol {
   list-style-type: none;
+  color: rgb(185, 255, 185);
+  margin: 0px 30%;
+  padding: 3px;
+  li {
+    background-color: rgba(59, 59, 59, 0.45);
+    margin: 3px;
+  }
 }
