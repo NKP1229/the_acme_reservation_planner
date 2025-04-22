@@ -24,7 +24,6 @@ const createTables = async () => {
         `;
     await client.query(SQL);
     console.log("We have seeded our db");
-    await client.end();
   } catch (error) {
     console.error(error);
   }
@@ -99,7 +98,7 @@ const destroyReservation = async (id, customer_id) => {
     const SQL = `
         DELETE FROM reservation 
         WHERE id = $1 
-        AND WHERE customer_id = (SELECT id from customer where type = $2)
+        AND customer_id = (SELECT id FROM customer WHERE name = $2)
     `;
     const response = await client.query(SQL, [id, customer_id]);
     return response.rows;

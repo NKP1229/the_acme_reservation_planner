@@ -4,6 +4,8 @@ const app = express();
 const PORT = 3000;
 app.use(require("morgan")("dev"));
 const cors = require("cors");
+app.use(cors({ origin: "http://localhost:3000" }));
+app.use(express.json());
 const {
   createTables,
   createCustomer,
