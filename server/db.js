@@ -73,8 +73,33 @@ const fetchRestaurants = async (id) => {
     console.error(error);
   }
 };
-const createReservation = async () => {};
-const destroyReservation = async () => {};
+const createReservation = async (
+  date,
+  party_count,
+  restaurant_id,
+  customer_id
+) => {
+  try {
+    const SQL = `
+        INSERT INTO reservation(date, party_count, restaurant_id, customer_id) VALUES($1, $2, $3, $4) RETURNING *
+    `;
+    response = await client.query(SQL, [
+      date,
+      party_count,
+      restaurant_id,
+      customer_id,
+    ]);
+    return response.rows;
+  } catch (error) {
+    console.error(error);
+  }
+};
+const destroyReservation = async () => {
+  try {
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 module.exports = {
   createTables,
