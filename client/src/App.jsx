@@ -8,7 +8,9 @@ function App() {
   const [customers, setCustomers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [addCustomer, setAddCustomer] = useState(false);
+  const [customerName, setCustomerName] = useState("");
   const [addRestaurant, setAddRestaurant] = useState(false);
+  const [restaurantName, setRestaurantName] = useState("");
 
   useEffect(() => {
     const getAllRestaurants = async () => {
@@ -39,6 +41,32 @@ function App() {
     getAllCustomers();
   }, [showRestaurant, addRestaurant]);
 
+  async function addNewCustomer(event) {
+    event.preventDefault();
+    try {
+      console.log("new customer: ", customerName);
+      const response = await axios.post("/api/newCustomer", {
+        name: customerName,
+      });
+      setAddCustomer(false);
+    } catch (error) {
+      console.error(error);
+      setAddCustomer(false);
+    }
+  }
+  async function addNewRestaurant(event) {
+    event.preventDefault();
+    try {
+      console.log("new customer: ", restaurantName);
+      const response = await axios.post("/api/newRestaurant", {
+        name: restaurantName,
+      });
+      setAddRestaurant(false);
+    } catch (error) {
+      console.error(error);
+      setAddRestaurant(false);
+    }
+  }
   if (isLoading) {
     return <section className="loading">Loading</section>;
   }
@@ -48,6 +76,19 @@ function App() {
         <main>
           <button onClick={() => setAddCustomer(false)}>back</button>
           <h1>Add new Customer:</h1>
+          <form onSubmit={addNewCustomer}>
+            <div>
+              <label>Name</label>
+              <input
+                type="text"
+                name="customerName"
+                value={customerName}
+                onChange={(e) => setCustomerName(e.target.value)}
+                placeholder="Enter customer name"
+              ></input>
+            </div>
+            <button type="submit">Submit</button>
+          </form>
         </main>
       </div>
     );
@@ -58,6 +99,19 @@ function App() {
         <main>
           <button onClick={() => setAddRestaurant(false)}>back</button>
           <h1>Add new Restaurant:</h1>
+          <form onSubmit={addNewRestaurant}>
+            <div>
+              <label>Name</label>
+              <input
+                type="text"
+                name="restaurantName"
+                value={restaurantName}
+                onChange={(e) => setRestaurantName(e.target.value)}
+                placeholder="Enter restaurant name"
+              ></input>
+            </div>
+            <button type="submit">Submit</button>
+          </form>
         </main>
       </div>
     );
